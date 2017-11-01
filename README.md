@@ -8,4 +8,4 @@ Apart from the master branch, there are two branches. Make sure you are right br
 
 ## Running the Development Server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm install` to install all the packages. Next, try `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
