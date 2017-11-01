@@ -1,122 +1,104 @@
-<div class="row ">
-  <div class= "col-sm-7 custom-row jumbotron">
-	
-	<form novalidate 
-		(ngSubmit)="onFormSubmit(signupForm)" 
-		#signupForm="ngForm">
-	    <fieldset>
-		  <legend>SignUp</legend>
-	    	
-	    	<!-- Email input block -->
-	        <div class="form-group">
-		      <label for="inputEmail" class="col-lg-2
-		      control-label">Email</label>
-		      <div class="col-lg-7">
-				  <input type="text" class = "form-control" 
-				    [ngModel] = "user.email" name="email"
-			        #email = "ngModel" id="inputEmail" 
-			        placeholder="Email"
-			        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-			        required>
-			   </div>
-		   	
+ <div class="row">
+  <div class= "col-sm-7  custom-row jumbotron">
+      
+   <form class="form-horizontal"  [formGroup]="signupForm" 
+         (ngSubmit)="onFormSubmit()">
 
-		   	<!-- Email error block -->
+        <fieldset>
+    	  <legend>SignUp</legend>
+        
+            <!--- Email Block -->
+            <div class="form-group">
+    	      <label for="inputEmail" class="col-lg-2
+              control-label">Email</label>
+              
+              <div class="col-lg-7">
+        		<input type="text"  class="form-control"
+                  id="inputEmail" formControlName = "email"
+        	      placeholder="Email">
+              </div>
 
-				<div *ngIf="email.invalid && ( email.touched)"
-				 	class="col-sm-3 text-danger">
-				 	<div *ngIf = "email.errors?.required">
-				 		Email field can't be blank
-				 	</div>
-				 	<div *ngIf = "email.errors?.pattern && email.touched">
-				 		The email id doesn't seem right
-				 	</div>
-				 </div>
-			</div>
+              <!-- Email error block -->
+              <div *ngIf="email.invalid && email.touched"
+                class="col-sm-3 text-danger">
 
-			<!-- Password block -->
-			<div ngModelGroup="password" #userPassword="ngModelGroup" >
-			   	<div class="form-group ">
-			     	 <label for="inputPassword" class="col-lg-2 	control-label">Password</label>
-			      	<div class="col-lg-7">
-				      	<input type="password" class="form-control"
-				        ngModel name="pwd"
-			            id="inputPassword" placeholder="Password"
-			            minlength ="8" required
-			           >
-			       	</div>
-			   	</div>
+                <div *ngIf = "email.errors?.required">
+                    Email field can't be blank
+                </div>
 
-			    <div class="form-group">
-			     	<label for="confirmPassword" class="col-lg-2
-		      control-label" >Confirm Password</label>
-		      	 	 <div class="col-lg-7">
-				      	<input type="password" class="form-control"
-				        ngModel name="confirmPwd"
-			            id="confirmPassword" placeholder="Confirm Password">
-			       </div>
-			     </div>
-			   
-			<!-- Password error block -->
-			    <div *ngIf="(userPassword.invalid|| userPassword.value?.pwd != userPassword.value?.confirmPwd) && (userPassword.touched)"
-			 	class="col-sm-3 text-danger">
-			 	
-			 		<div *ngIf = "userPassword.invalid; else nomatch">
-		 				Password needs to be more than 8 characters
-			 		</div>
-			 		<ng-template #nomatch >
-			 			Passwords don't match
-			 		</ng-template>
-			 
-			 	</div>
-			</div>				
-			
-			<br>
-			<!-- Select Gender block -->
-		    <div class="form-group">
-		      <label for="select" class="col-lg-2">Gender</label>
-		       <div class="col-lg-7">
-		        <select id="select" class="form-control"
-		          [ngModel] = "user.gender" name = "gender"
-		          required>
-		          
-		          <option *ngFor = "let g of gender"  
-		            [value] = "g"> {{g}} 
-		          </option>
-		        </select>
-		       </div>
-		    </div>
-			
-			<!-- Terms checkbox block -->
+                <div *ngIf = "email.errors?.pattern">
+                    The email id doesn't seem right
+                </div>
 
-			<div class="form-group checkbox">
-               	<div class="col-lg-6 ">
-	                <input type="checkbox" 
-	                	ngModel name = "terms"
-	                	#terms = "ngModel"
-	                	required> Confirm that you've read the Terms and Condition
-	            </div>
+              </div>
+    	   	</div>
+            <!--- Password Block -->
+            <div formGroupName = "password">
+                <div class="form-group">
+                  <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                  <div class="col-lg-7">
+                    <input type="password" formControlName = "pwd"
+                      id="inputPassword"  class="form-control"
+                      placeholder="Password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="confirmPassword" class="col-lg-2 control-label">Confirm Password</label>
+                  <div class="col-lg-7">
+                    <input type="password" formControlName = "confirmPwd"
+                      id="confirmPassword"  class="form-control"
+                      placeholder="Password">
+                  </div>
+
+                    <!-- Password error block -->
+                 <div *ngIf="(password.invalid && password.touched)" class="col-sm-3 text-danger">
             
-
-            <!-- Terms checkbox error block -->
-	            <div *ngIf="(terms.invalid && terms.touched)"
-				 	class="col-lg-4 text-danger">
-				 	You need to check this box to continue
-	            </div>
-           	</div>
+                    Password needs to be more than 8 characters
+                </div>
+                </div>
+               
+            </div>
+            
+            <!-- Gender Block -->
+    	    <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Gender</label>
+                <div class="col-lg-7">
+                   <select id="select"  class="form-control" formControlName="gender">
+                     
+                     <option *ngFor = "let g of genderList" 
+                       [value] = "g"> {{g}} 
+                     </option>
+                   </select>
+                </div>
+            </div>
+            
+            <!--- Terms and conditions Block -->
+             <div class="form-group checkbox">
+                <div class="col-lg-6 ">
+                    <input type="checkbox" formControlName="terms"> Confirm that you've read the Terms and 
+                    Conditions
+                </div>
+             
+              <!--- Terms error block -->
+              <div *ngIf="(terms.invalid && terms.touched)"
+               class="col-lg-4 text-danger">
+                
+                Please accept the Terms and conditions first.
+              </div>
+            </div>
+            
     	   
-    	   <!-- Buttons block -->
-		    <div class="form-group ">
-		    	<div class="col-lg-10 col-lg-offset-2">
-			        <button type="reset" class="btn btn-default">Cancel</button>
-			        <button type="submit" class="btn btn-success" 
-	   					[disabled]="!signupForm.form.valid"> Submit
-					</button>
-				</div>
-		    </div>
-
-
-		</fieldset>
-	</form>
+           <!--- Buttons Block -->
+            <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button type="submit" [disabled] = "!signupForm.valid" class="btn btn-primary">Submit</button>
+            </div>
+            </div>
+    	</fieldset>
+    </form>
+    <!--- Log the FormGroup values to see if the binding is working -->
+   
   </div>
 </div>
